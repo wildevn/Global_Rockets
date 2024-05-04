@@ -16,6 +16,9 @@ const config: Config = {
         "productDiv": "151px",
         "productLabel": "47px",
       },
+      width: {
+        "defaultBanner": "1080px",
+      }
     },
   },
   plugins: [],
