@@ -17,8 +17,12 @@ const config: Config = {
         "productLabel": "47px",
       },
       width: {
-        "defaultBanner": "1080px",
-      }
+        "defaultBannerXl": "1080px",
+        "defaultBanner": "10px",
+      },
+      screens: {
+        "full-hd": "1080px",
+      },
     },
   },
   plugins: [],

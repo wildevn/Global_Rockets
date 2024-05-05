@@ -7,7 +7,7 @@ export default function ProductsList() {
     return (
         <div className="w-screen m-2 flex items-center overflow-x-hidden">
             {chevronLeftIcon()}
-            <div className="flex overflow-x-auto no-scroll-bar">
+            <div className="flex overflow-x-hidden no-scrollbar">
                 <ProductItem/>
                 <ProductItem/>
                 <ProductItem/>
