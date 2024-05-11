@@ -4,8 +4,8 @@ import { eyeLashIcon } from '../icons'
 
 export default function LoginComponent() {
 
-    /*function changeVisibility(span: HTMLElement) {
-        var eye_element:SVGElement = span.firstChild
+    function changeVisibility(span: HTMLElement) {
+        var eye_element:any = span.firstChild 
         if(eye_element.id === 'eyeLashIcon') {
             console.log('é sim')
         }
