@@ -5,11 +5,11 @@ import { chevronLeftIcon, chevronRightIcon } from './icons'
 
 export default function ProductsList() {
     return (
-        <div className="w-screen m-2 flex items-center overflow-x-hidden">
-            {chevronLeftIcon()}
-            <div className="flex overflow-x-hidden no-scrollbar">
-                <ProductItem/>
-                <ProductItem/>
+        <div className="w-screen h-72 m-2 flex items-center overflow-x-hidden">
+            <div className='w-[5%]'>
+                {chevronLeftIcon()}
+            </div>
+            <div className="w-[90%] flex flex-nowrap overflow-x-hidden h-full no-scrollbar">
                 <ProductItem/>
                 <ProductItem/>
                 <ProductItem/>
@@ -18,7 +18,9 @@ export default function ProductsList() {
                 <ProductItem/>
                 <ProductItem/>
             </div>
-            {chevronRightIcon()}
+            <div className='w-[5%]'>
+                {chevronRightIcon()}
+            </div>
         </div>
     )
 }
