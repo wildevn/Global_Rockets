@@ -1,5 +1,5 @@
 
-import ProductsList from "@/components/ProductsList";
+import ProductsList from "@/components/produto/ProductsList";
 import BannerItem from "@/components/BannerItem";
 import HeaderComponent from "@/components/HeaderComponent";
 

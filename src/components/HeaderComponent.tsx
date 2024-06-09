@@ -38,7 +38,7 @@ export default function HeaderComponent() {
                 <div className='flex text-white font-semibold text-xs space-x-12'>
                     <div className='flex justify-center items-center'>
                         <span className='mr-2'>{userIcon('h-8 w-8')}</span>
-                        <Link href={`#`} className='underline'>Entrar / Cadastrar</Link>
+                        <Link href={'/login'} className='underline'>Entrar / Cadastrar</Link>
                     </div>
                     <div className='flex space-x-2'>
                         <Link href={`#`}>{clipboardIcon('h-8 w-8')}</Link>

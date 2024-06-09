@@ -1,11 +1,11 @@
 'use client'
 import React from 'react'
 import ProductItem from './ProductItem'
-import { chevronLeftIcon, chevronRightIcon } from './icons'
+import { chevronLeftIcon, chevronRightIcon } from '../icons'
 
 export default function ProductsList() {
     return (
-        <div className="w-screen h-72 m-2 flex items-center overflow-x-hidden">
+        <div className="w-full h-72 flex items-center overflow-x-hidden">
             <div className='w-[5%]'>
                 {chevronLeftIcon()}
             </div>
