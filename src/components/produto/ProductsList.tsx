@@ -9,14 +9,13 @@ export default function ProductsList() {
             <div className='w-[5%]'>
                 {chevronLeftIcon()}
             </div>
-            <div className="w-[90%] flex flex-nowrap overflow-x-hidden h-full no-scrollbar">
-                <ProductItem/>
-                <ProductItem/>
-                <ProductItem/>
-                <ProductItem/>
-                <ProductItem/>
-                <ProductItem/>
-                <ProductItem/>
+            <div className="w-[90%] flex flex-nowrap flex-grow-0 flex-shrink-0 overflow-x-hidden h-full no-scrollbar">
+                <ProductItem area='default'/>
+                <ProductItem area='default'/>
+                <ProductItem area='default'/>
+                <ProductItem area='default'/>
+                <ProductItem area='default'/>
+                <ProductItem area='default'/>
             </div>
             <div className='w-[5%]'>
                 {chevronRightIcon()}

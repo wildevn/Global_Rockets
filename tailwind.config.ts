@@ -17,7 +17,8 @@ const config: Config = {
         "defaultDarkerRed": "#b4004f",
       },
       height: {
-        "productDiv": "151px",
+        "productDivDefault": "151px",
+        "productDiv": "201px",
         "productLabel": "47px",
       },
       width: {

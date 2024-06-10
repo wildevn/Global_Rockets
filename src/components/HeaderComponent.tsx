@@ -24,11 +24,13 @@ export default function HeaderComponent() {
     return (
         <div className='w-full bg-[#e5004f]'>
             <div className='flex py-4 px-12 items-center justify-center space-x-16'>
-                <div className='text-white text-lg font-semibold flex flex-wrap mr-2'>
-                    {showText &&<span>Global Rockets</span>}
-                    {showBigIcon &&<span>{rocketIcon('h-8 w-8')}</span>}
-                    {showSmallIcon &&<span className='pt-1'>{rocketIcon()}</span>}
-                </div>
+                <Link href={'/'}>
+                    <div className='text-white text-lg font-semibold flex flex-wrap mr-2'>
+                        {showText &&<span>Global Rockets</span>}
+                        {showBigIcon &&<span>{rocketIcon('h-8 w-8')}</span>}
+                        {showSmallIcon &&<span className='pt-1'>{rocketIcon()}</span>}
+                    </div>
+                </Link>
                 <div className='flex'>
                     <input type="text" placeholder="Buscar" className='focus:outline-none min-[1200px]:w-96 bg-white text-sm px-6 py-1 rounded-l-md border border-[#B3B3B3]'/>
                     <div className='border border-[#7E002C] p-1 rounded-r-md bg-[#B4003E]'>
