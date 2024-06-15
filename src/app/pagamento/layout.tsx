@@ -1,8 +1,8 @@
-import HeaderComponent from "@/components/HeaderComponent"
+import ReducedHeaderComponent from "@/components/ReducedHeaderComponent"
 
 export const metadata = {
-  title: 'Carrinho',
-  description: 'Carrinho de compras',
+  title: 'Pagamento',
+  description: 'Compre agora seu produto',
 }
 
 export default function RootLayout({
@@ -14,7 +14,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <header>
-					<HeaderComponent/>
+					<ReducedHeaderComponent/>
 				</header>
         {children}
       </body>

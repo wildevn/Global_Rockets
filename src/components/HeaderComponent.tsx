@@ -44,7 +44,7 @@ export default function HeaderComponent() {
                     </div>
                     <div className='flex space-x-2'>
                         <Link href={`#`}>{clipboardIcon('h-8 w-8')}</Link>
-                        <Link href={`#`}>{shopCartIcon('h-8 w-8')}</Link>
+                        <Link href={`/carrinho`}>{shopCartIcon('h-8 w-8')}</Link>
                         <Link href={`#`}>{toolsIcon('h-8 w-8')}</Link>
                     </div>
                 </div>
