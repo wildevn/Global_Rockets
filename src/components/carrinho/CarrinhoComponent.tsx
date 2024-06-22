@@ -1,17 +1,42 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ProductCarrinhoItem from "../produto/ProductCarrinhoItem"
 import Link from 'next/link'
-import test from 'node:test'
-
 
 export default function CarrinhoComponent() {
-    const [itemAmount, setItemAmount] = useState(0)
-    const [price, setPrice] = useState(10)
+    const [productsList, setProductsList] = useState({
+        quantidadeTotal: 2,
+        precoTotal: 44.94,
+        produtos: [
+            {
+                key: "solupan 1",
+                qtd: 1,
+                preco: 22.47,
+            },
+            {
+                key: "solupan 2",
+                qtd: 1,
+                preco: 22.47
+            }
+        ]
+    })
 
-    function teste() {
-        console.log(price)
-    }
+    // useEffect(() => {
+    //     if(productsList.refresh === 1) {
+    //         var quantidadeTotal = 0
+    //         var precoTotal = 0
+    //         for(let i = 0; i < productsList.produtos.length; i++) {
+    //             quantidadeTotal += productsList.produtos[i].qtd
+    //             precoTotal += productsList.produtos[i].preco * productsList.produtos[i].qtd
+    //         }
+    //         setProductsList({...productsList, refresh: 0, quantidadeTotal, precoTotal})
+    //     }
+    // }, [productsList.refresh])
+
+    useEffect(() => {
+        
+    })
+
 
     return (
         <div className="max-[900px]:w-[90%] min-[900px]:w-[900px] flex items-center box-border gap-8">
@@ -21,9 +46,24 @@ export default function CarrinhoComponent() {
                 </div>
                 <hr className="border w-[95%]" />
                 <div className="w-full p-8">
-                    <ProductCarrinhoItem src={'/galaoDeDetergenteAutomotivo.png'} nome={'Solupan'} preco={22.47} vendidoPor={"ninguemAtéEntao"} />
+                    <ProductCarrinhoItem
+                        src={'/galaoDeDetergenteAutomotivo.png'}
+                        nomeProduto={'solupan 1'} 
+                        preco={22.47}
+                        vendidoPor={"ninguemAtéEntao"}
+                        quantidade={1}
+                        setState={setProductsList} 
+                        itemsState={productsList}/>
                     <hr className="border w-[95%]" />
-                    <ProductCarrinhoItem src={'/galaoDeDetergenteAutomotivo.png'} nome={'Solupan'} preco={22.47} vendidoPor={"ninguemAtéEntao"} />
+
+                    <ProductCarrinhoItem
+                        src={'/galaoDeDetergenteAutomotivo.png'}
+                        nomeProduto={'solupan 2'}
+                        preco={22.47} 
+                        vendidoPor={"ninguemAtéEntao"} 
+                        quantidade={1} 
+                        setState={setProductsList}
+                        itemsState={productsList}/>
                     <hr className="border w-[95%]" />
                 </div>
             </div>
@@ -32,8 +72,8 @@ export default function CarrinhoComponent() {
                 <div className="p-4 text-sm">
                     <h2 className="text-xl text-center font-semibold">Resumo do pedido</h2>
                     <div className='pt-6 flex justify-between'>
-                        <span>{itemAmount > 1 ? <>{itemAmount} produto</> : <>{itemAmount} produtos</>}</span>
-                        <span>{`R$ ${price.toFixed(2)}`}</span>
+                        <span>{productsList.quantidadeTotal === 1 ? <>{productsList.quantidadeTotal} produto</> : <>{productsList.quantidadeTotal} produtos</>}</span>
+                        <span>{`R$ ${productsList.precoTotal.toFixed(2)}`}</span>
                     </div>
                     <div className='flex justify-between pb-1'>
                         <span>frete</span>
@@ -43,15 +83,17 @@ export default function CarrinhoComponent() {
                     <div className='pt-1 pb-2 flex justify-between'>
                         <span className='font-semibold'>total</span>
                         <div className='text-end'>
-                            <p className='font-semibold text-base'>{`R$ ${price.toFixed(2)}`}</p>
+                            <p className='font-semibold text-base'>{`R$ ${productsList.precoTotal.toFixed(2)}`}</p>
                             <p>em 1x no cartão</p>
-                            <p>ou {`R$ ${(price * 1.1).toFixed(2)}`} em até 12x</p>
+                            <p>ou {`R$ ${(productsList.precoTotal * 1.1).toFixed(2)}`} em até 12x</p>
                         </div>
                     </div>
 
-                    <Link href={`pagamento`} className='w-full rounded-lg p-2.5 text-center text-base text-white bg-defaultRed hover:bg-defaultDarkerRed drop-shadow-[-1px_4px_2px_rgba(0,0,0,0.45)]'>
-                        Ir para o pagamento
-                    </Link>
+                    <button className='w-full rounded-lg p-2.5 text-center text-base text-white bg-defaultRed hover:bg-defaultDarkerRed drop-shadow-[-1px_4px_2px_rgba(0,0,0,0.45)]'>
+                        <Link href={`pagamento`}>
+                            Ir para o pagamento
+                        </Link>
+                    </button>
                 </div>
             </div>
         </div>

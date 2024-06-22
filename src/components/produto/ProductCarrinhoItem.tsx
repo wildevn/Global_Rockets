@@ -4,44 +4,80 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 
 
-interface ProductInterface{
-    src: string,
-    nome: string,
+interface ProductsStateList {
+    key: string,
+    qtd: number,
     preco: number,
-    vendidoPor: string,
 }
 
-export default function ProductCarrinhoItem(produto: ProductInterface) {
+interface ProductsState {
+    quantidadeTotal: number,
+    precoTotal: number,
+    produtos: Array<ProductsStateList>
+}
 
-    const [itemAmount, setItemAmount] = useState(1)
-	
+interface ProductInterface{
+    src: string,
+    nomeProduto: string,
+    preco: number,
+    vendidoPor: string,
+    quantidade: number,
+    setState: Function,
+    itemsState: ProductsState,
+}
+
+export default function ProductCarrinhoItem({ src, nomeProduto, preco, vendidoPor, quantidade, setState, itemsState }: ProductInterface) {
+   const [itemAmount, setItemAmount] = useState(quantidade)
+
 	function onHandleClick(plus: boolean) {
-		if (plus == true) {
-			if (itemAmount < 99) 
-                setItemAmount(itemAmount + 1)
-			
-		} else if (itemAmount > 1) {
-			setItemAmount(itemAmount - 1)
+        let produtos = itemsState.produtos
+		if (plus == true && itemAmount < 99) {
+            for(let i = 0; i < itemsState.produtos.length; i++){
+                if(itemsState.produtos[i].key === nomeProduto) {
+                    produtos[i] = { key: nomeProduto, qtd: itemAmount + 1, preco}
+                    setState({ ...itemsState, quantidadeTotal: itemsState.quantidadeTotal + 1, precoTotal: itemsState.precoTotal + preco, produtos})
+                }
+            }
+            setItemAmount(itemAmount + 1)
+		} else if (itemAmount> 1) {
+            for(let i = 0; i < itemsState.produtos.length; i++){
+                if(itemsState.produtos[i].key === nomeProduto) {
+                    produtos[i] = { key: nomeProduto, qtd: itemAmount - 1, preco}
+                    setState({ ...itemsState, quantidadeTotal: itemsState.quantidadeTotal - 1, precoTotal: itemsState.precoTotal - preco, produtos})
+                }
+            }
+            setItemAmount(itemAmount - 1)
 		}
 	}
+
+    function onHandleDelete() {
+        let produtos = itemsState.produtos
+        for(let i = 0; i < itemsState.produtos.length; i++){
+            if(itemsState.produtos[i].key === nomeProduto) {
+                produtos[i] = { key: nomeProduto, qtd: 0, preco}
+                setState({ ...itemsState, quantidadeTotal: itemsState.quantidadeTotal - itemAmount, precoTotal: itemsState.precoTotal - itemAmount * preco, produtos})
+            }
+        }
+        setItemAmount(itemAmount + 1)
+    }
 
     return (
         <div className='flex'>
             <Image 
-                    src={produto.src} 
-                    alt={produto.nome}
+                    src={src} 
+                    alt={nomeProduto}
                     width={150}
                     height={150}
                 />
             <div className='w-full pt-3'>
                 <div className='flex justify-between'>
-                    <h1 className='text-2xl'>{produto.nome}</h1>
-                    <h1 className='text-xl font-bold'>{`R$ ${(itemAmount * produto.preco).toFixed(2)}`}</h1>
+                    <h1 className='text-2xl'>{nomeProduto}</h1>
+                    <h1 className='text-xl font-bold'>{`R$ ${(itemAmount * preco).toFixed(2)}`}</h1>
                 </div>
                 <div>
                     <span className='text-xs'>
                         Vendido por 
-                        <span className='font-bold'> {produto.vendidoPor}</span>
+                        <span className='font-bold'> {vendidoPor}</span>
                     </span>
                 </div>
                 <div className='w-full flex pt-3 items-center gap-5'>
@@ -54,7 +90,7 @@ export default function ProductCarrinhoItem(produto: ProductInterface) {
                             onClick={() => onHandleClick(true)}
                         >+</button>
                     </div>
-                    <button >excluir</button>
+                    <button onClick={onHandleDelete}>excluir</button>
 				</div>
             </div>
         </div>
