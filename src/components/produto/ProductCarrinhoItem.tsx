@@ -2,48 +2,31 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
+import { ProductsList } from '../carrinho/CarrinhoComponent'
 
-
-interface ProductsStateList {
-    key: string,
-    qtd: number,
-    preco: number,
-}
-
-interface ProductsState {
-    quantidadeTotal: number,
-    precoTotal: number,
-    produtos: Array<ProductsStateList>
-}
-
-interface ProductInterface{
-    src: string,
-    nomeProduto: string,
-    preco: number,
-    vendidoPor: string,
-    quantidade: number,
+interface ProductInterface extends ProductsList{
     setState: Function,
-    itemsState: ProductsState,
+    productsList: Array<ProductsList>,
 }
 
-export default function ProductCarrinhoItem({ src, nomeProduto, preco, vendidoPor, quantidade, setState, itemsState }: ProductInterface) {
+export default function ProductCarrinhoItem({ imgSrc, key, nomeProduto, preco, quantidade, vendidoPor, productsList, setState}: ProductInterface) {
    const [itemAmount, setItemAmount] = useState(quantidade)
 
 	function onHandleClick(plus: boolean) {
-        let produtos = itemsState.produtos
+        let produtos = productsList
 		if (plus == true && itemAmount < 99) {
-            for(let i = 0; i < itemsState.produtos.length; i++){
-                if(itemsState.produtos[i].key === nomeProduto) {
-                    produtos[i] = { key: nomeProduto, qtd: itemAmount + 1, preco}
-                    setState({ ...itemsState, quantidadeTotal: itemsState.quantidadeTotal + 1, precoTotal: itemsState.precoTotal + preco, produtos})
+            for(let i = 0; i < productsList.length; i++){
+                if(productsList[i].key === key) {
+                    produtos[i] = { ...produtos[i], quantidade: itemAmount + 1}
+                    setState([...produtos])
                 }
             }
             setItemAmount(itemAmount + 1)
-		} else if (itemAmount> 1) {
-            for(let i = 0; i < itemsState.produtos.length; i++){
-                if(itemsState.produtos[i].key === nomeProduto) {
-                    produtos[i] = { key: nomeProduto, qtd: itemAmount - 1, preco}
-                    setState({ ...itemsState, quantidadeTotal: itemsState.quantidadeTotal - 1, precoTotal: itemsState.precoTotal - preco, produtos})
+		} else if (itemAmount > 1) {
+            for(let i = 0; i < productsList.length; i++){
+                if(productsList[i].key === key) {
+                    produtos[i] = { ...produtos[i], quantidade: itemAmount - 1}
+                    setState([...produtos])
                 }
             }
             setItemAmount(itemAmount - 1)
@@ -51,20 +34,20 @@ export default function ProductCarrinhoItem({ src, nomeProduto, preco, vendidoPo
 	}
 
     function onHandleDelete() {
-        let produtos = itemsState.produtos
-        for(let i = 0; i < itemsState.produtos.length; i++){
-            if(itemsState.produtos[i].key === nomeProduto) {
-                produtos[i] = { key: nomeProduto, qtd: 0, preco}
-                setState({ ...itemsState, quantidadeTotal: itemsState.quantidadeTotal - itemAmount, precoTotal: itemsState.precoTotal - itemAmount * preco, produtos})
+        let produtos = productsList
+        for(let i = 0; i < productsList.length; i++){
+            if(productsList[i].key === key) {
+                produtos[i] = { ...produtos[i], quantidade: 0}
+                setState([...produtos])
             }
         }
-        setItemAmount(itemAmount + 1)
+        setItemAmount(0)
     }
 
     return (
         <div className='flex'>
             <Image 
-                    src={src} 
+                    src={imgSrc} 
                     alt={nomeProduto}
                     width={150}
                     height={150}
