@@ -4,63 +4,43 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import { ProductsList } from '../carrinho/CarrinhoComponent'
 
-interface ProductInterface extends ProductsList{
+interface ProductInterface{
+    product: ProductsList,
     setState: Function,
+    setDelete: Function,
     productsList: Array<ProductsList>,
 }
 
-export default function ProductCarrinhoItem({ imgSrc, key, nomeProduto, preco, quantidade, vendidoPor, productsList, setState}: ProductInterface) {
-   const [itemAmount, setItemAmount] = useState(quantidade)
+export default function ProductCarrinhoItem({product, productsList, setState, setDelete}: ProductInterface) {
+   const [itemAmount, setItemAmount] = useState(product.quantidade)
 
 	function onHandleClick(plus: boolean) {
-        let produtos = productsList
 		if (plus == true && itemAmount < 99) {
-            for(let i = 0; i < productsList.length; i++){
-                if(productsList[i].key === key) {
-                    produtos[i] = { ...produtos[i], quantidade: itemAmount + 1}
-                    setState([...produtos])
-                }
-            }
+            setState(itemAmount + 1, product.key)
             setItemAmount(itemAmount + 1)
 		} else if (itemAmount > 1) {
-            for(let i = 0; i < productsList.length; i++){
-                if(productsList[i].key === key) {
-                    produtos[i] = { ...produtos[i], quantidade: itemAmount - 1}
-                    setState([...produtos])
-                }
-            }
+            setState(itemAmount - 1, product.key)
             setItemAmount(itemAmount - 1)
 		}
 	}
-
-    function onHandleDelete() {
-        let produtos = productsList
-        for(let i = 0; i < productsList.length; i++){
-            if(productsList[i].key === key) {
-                produtos[i] = { ...produtos[i], quantidade: 0}
-                setState([...produtos])
-            }
-        }
-        setItemAmount(0)
-    }
-
+    
     return (
         <div className='flex'>
             <Image 
-                    src={imgSrc} 
-                    alt={nomeProduto}
+                    src={product.imgSrc} 
+                    alt={product.nomeProduto}
                     width={150}
                     height={150}
                 />
             <div className='w-full pt-3'>
                 <div className='flex justify-between'>
-                    <h1 className='text-2xl'>{nomeProduto}</h1>
-                    <h1 className='text-xl font-bold'>{`R$ ${(itemAmount * preco).toFixed(2)}`}</h1>
+                    <h1 className='text-2xl'>{product.nomeProduto}</h1>
+                    <h1 className='text-xl font-bold'>{`R$ ${(itemAmount * product.preco).toFixed(2)}`}</h1>
                 </div>
                 <div>
                     <span className='text-xs'>
                         Vendido por 
-                        <span className='font-bold'> {vendidoPor}</span>
+                        <span className='font-bold'> {product.vendidoPor}</span>
                     </span>
                 </div>
                 <div className='w-full flex pt-3 items-center gap-5'>
@@ -73,7 +53,7 @@ export default function ProductCarrinhoItem({ imgSrc, key, nomeProduto, preco, q
                             onClick={() => onHandleClick(true)}
                         >+</button>
                     </div>
-                    <button onClick={onHandleDelete}>excluir</button>
+                    <button onClick={() => setDelete(product.key)}>excluir</button>
 				</div>
             </div>
         </div>

@@ -14,85 +14,113 @@ export interface ProductsList {
 
 
 export default function CarrinhoComponent() {
-    const [productsComponentList, setProductsComponentList] = useState([<></>])
-    const [checkoutInfo, setCheckoutInfo] = useState({
-        quantidadeList: [0],
-        quantidadeTotal: 0,
-        precoTotal: 0,
-    })
-    const [productsList, setProductsList] = useState(cartProducts())
-
-    function cartProducts(): Array<ProductsList>{
-        var list: Array<ProductsList> = []
-
-        for(let i = 1; i < 4; i++) {
-            list.push({
-                imgSrc: '/galaoDeDetergenteAutomotivo.png',
-                key: `Solupan ${i}`,
-                nomeProduto: `Solupan`,
-                preco: 22.47,
-                quantidade: i,
-                vendidoPor: `Ze ninguem ${i}`
-            })
+    let itemsData: Array<ProductsList> = [
+        {   
+            key: '1',
+            nomeProduto: 'Solupan',
+            quantidade: 2,
+            imgSrc: '/galaoDeDetergenteAutomotivo.png',
+            preco: 22.47,
+            vendidoPor: 'João Pedro',  
+        },
+        {   
+            key: '2',
+            nomeProduto: 'Solupan',
+            quantidade: 5,
+            imgSrc: '/galaoDeDetergenteAutomotivo.png',
+            preco: 22.47,   
+            vendidoPor: 'João', 
+        },
+        {   
+            key: '3',
+            nomeProduto: 'Solupan',
+            quantidade: 1,
+            imgSrc: '/galaoDeDetergenteAutomotivo.png',
+            preco: 22.47,   
+            vendidoPor: 'Pedro', 
         }
-        return list
-    }
+    ]
+    const [items, setItems] = useState<ProductsList[]>(itemsData)
 
-    useEffect(() => {
-        // checkout
-        let quantidadeList = checkoutInfo.quantidadeList
-        let quantidadeTotal = 0
-        let precoTotal = 0
-        let deletar_produto = -1
+//     const [productsComponentList, setProductsComponentList] = useState([<></>]) INICIO COMENTADO
+//     const [checkoutInfo, setCheckoutInfo] = useState({
+//         quantidadeList: [0],
+//         quantidadeTotal: 0,
+//         precoTotal: 0,
+//     })
+//     const [productsList, setProductsList] = useState(cartProducts())
 
-        // inicialização
-        productsList.forEach((produto) => {
-            if(produto.quantidade !== 0) {
-                if(quantidadeList.length === 0) {
-                    quantidadeList[0] = produto.quantidade
-                    quantidadeTotal += produto.quantidade
-                    precoTotal += produto.quantidade * produto.preco
-                }
-                else {
-                    quantidadeList.push(produto.quantidade)
-                    quantidadeTotal += produto.quantidade
-                    precoTotal += produto.quantidade * produto.preco
-                }             
-            }
-            else{
-                deletar_produto = productsList.indexOf(produto)
-            }
-        })
-        // if(deletar_produto){
-        //     let produtos = productsList
-        //     produtos.splice(deletar_produto, 1)
-        //     setProductsList([...produtos])
-        // }
+//     function cartProducts(): Array<ProductsList>{
+//         var list: Array<ProductsList> = []
 
-        // productsComponents
-//if(!deletar_produto) {
-            const productsComponents: Array<React.JSX.Element> = []
+//         for(let i = 1; i < 4; i++) {
+//             list.push({
+//                 imgSrc: '/galaoDeDetergenteAutomotivo.png',
+//                 key: `Solupan ${i}`,
+//                 nomeProduto: `Solupan`,
+//                 preco: 22.47,
+//                 quantidade: i,
+//                 vendidoPor: `Ze ninguem ${i}`
+//             })
+//         }
+//         return list
+//     }
+
+//     useEffect(() => {
+//         // checkout
+//         let quantidadeList = checkoutInfo.quantidadeList
+//         let quantidadeTotal = 0
+//         let precoTotal = 0
+//         let deletar_produto = -1
+
+//         // inicialização
+//         productsList.forEach((produto) => {
+//             if(produto.quantidade !== 0) {
+//                 if(quantidadeList.length === 0) {
+//                     quantidadeList[0] = produto.quantidade
+//                     quantidadeTotal += produto.quantidade
+//                     precoTotal += produto.quantidade * produto.preco
+//                 }
+//                 else {
+//                     quantidadeList.push(produto.quantidade)
+//                     quantidadeTotal += produto.quantidade
+//                     precoTotal += produto.quantidade * produto.preco
+//                 }             
+//             }
+//             else{
+//                 deletar_produto = productsList.indexOf(produto)
+//             }
+//         })
+//         // if(deletar_produto){
+//         //     let produtos = productsList
+//         //     produtos.splice(deletar_produto, 1)
+//         //     setProductsList([...produtos])
+//         // }
+
+//         // productsComponents
+// //if(!deletar_produto) {
+//             const productsComponents: Array<React.JSX.Element> = []
     
-            productsList.map((produto) => {
-                productsComponents.push((
-                    <>
-                        <ProductCarrinhoItem
-                            imgSrc={produto.imgSrc}
-                            key={produto.key}
-                            nomeProduto={produto.nomeProduto}
-                            preco={produto.preco}
-                            quantidade={produto.quantidade}
-                            vendidoPor={produto.vendidoPor}
-                            productsList={productsList}
-                            setState={setProductsList}/>
-                        <hr className="border w-[95%]" />
-                    </>
-                ))
-            })
-            setProductsComponentList([...productsComponents])
-       // }
-        setCheckoutInfo({ quantidadeList, quantidadeTotal, precoTotal })        
-    }, [productsList])
+//             productsList.map((produto) => {
+//                 productsComponents.push((
+//                     <>
+//                         <ProductCarrinhoItem
+//                             imgSrc={produto.imgSrc}
+//                             key={produto.key}
+//                             nomeProduto={produto.nomeProduto}
+//                             preco={produto.preco}
+//                             quantidade={produto.quantidade}
+//                             vendidoPor={produto.vendidoPor}
+//                             productsList={productsList}
+//                             setState={setProductsList}/>
+//                         <hr className="border w-[95%]" />
+//                     </>
+//                 ))
+//             })
+//             setProductsComponentList([...productsComponents])
+//        // }
+//         setCheckoutInfo({ quantidadeList, quantidadeTotal, precoTotal })        
+//     }, [productsList]) FINAL COMENTADO
 
     // useEffect(() => {
     //     // productComponentList
@@ -147,6 +175,32 @@ export default function CarrinhoComponent() {
                 </div>
                 <hr className="border w-[95%]" />
                 <div className="w-full p-8">
+                    {items.map((item:any) => (
+                        item.quantidade !== 0 && 
+                            <ProductCarrinhoItem 
+                            product={item}
+                            setState={(quantidade: number, key: string) => {
+                                const item_alterado = (): ProductsList => {
+                                    let aux: ProductsList = items[0]
+                                    for (let i = 0; i < itemsData.length; i++) {
+                                        if (itemsData[i].key === key) {
+                                            itemsData[i].quantidade = quantidade
+                                            aux = itemsData[i]
+                                        }
+                                    }
+                                    return aux
+                                }
+                                setItems([...items, item_alterado()])
+                            } } setDelete={(key: string) => {
+                                const aux: Array<ProductsList> = items
+                                for (let i = 0; i < itemsData.length; i++) {
+                                    if (itemsData[i].key === key) {
+                                        aux.splice(i, 1)
+                                    }
+                                }
+                                setItems(aux)
+                            } }/>
+                    ))}
                     {/* <ProductCarrinhoItem
                         imgSrc={'/galaoDeDetergenteAutomotivo.png'}
                         key={'solupan 1'}
@@ -168,9 +222,9 @@ export default function CarrinhoComponent() {
                         setState={setProductsList}
                         productsList={productsList} />
                     <hr className="border w-[95%]" /> */}
-                    {
+                    {/* {
                         productsComponentList
-                    }
+                    } */}
                 </div>
             </div>
 
@@ -178,8 +232,8 @@ export default function CarrinhoComponent() {
                 <div className="p-4 text-sm">
                     <h2 className="text-xl text-center font-semibold">Resumo do pedido</h2>
                     <div className='pt-6 flex justify-between'>
-                        <span>{checkoutInfo.quantidadeTotal === 1 ? <>{checkoutInfo.quantidadeTotal} produto</> : <>{checkoutInfo.quantidadeTotal} produtos</>}</span>
-                        <span>{`R$ ${checkoutInfo.precoTotal.toFixed(2)}`}</span>
+                        <span></span>
+                        <span>{`R$ ${}`}</span>
                     </div>
                     <div className='flex justify-between pb-1'>
                         <span>frete</span>
@@ -189,9 +243,9 @@ export default function CarrinhoComponent() {
                     <div className='pt-1 pb-2 flex justify-between'>
                         <span className='font-semibold'>total</span>
                         <div className='text-end'>
-                            <p className='font-semibold text-base'>{`R$ ${checkoutInfo.precoTotal.toFixed(2)}`}</p>
+                            {/* <p className='font-semibold text-base'>{`R$ ${checkoutInfo.precoTotal.toFixed(2)}`}</p> */}
                             <p>em 1x no cartão</p>
-                            <p>ou {`R$ ${(checkoutInfo.precoTotal * 1.1).toFixed(2)}`} em até 12x</p>
+                            {/* <p>ou {`R$ ${(checkoutInfo.precoTotal * 1.1).toFixed(2)}`} em até 12x</p> */}
                         </div>
                     </div>
 
