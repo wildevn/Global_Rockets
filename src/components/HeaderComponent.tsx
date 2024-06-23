@@ -5,6 +5,7 @@ import Link from 'next/link'
 
 export default function HeaderComponent() {
     const [windowWidth, setWindowWidth] = useState(0);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
@@ -20,6 +21,10 @@ export default function HeaderComponent() {
     const showText = windowWidth >= 951;
     const showBigIcon = windowWidth <= 950;
     const showSmallIcon = windowWidth > 1040
+    
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    };
 
     return (
         <div className='w-full bg-[#e5004f]'>
@@ -47,21 +52,6 @@ export default function HeaderComponent() {
                         <Link href={`/carrinho`}>{shopCartIcon('h-8 w-8')}</Link>
                         <Link href={`#`}>{toolsIcon('h-8 w-8')}</Link>
                     </div>
-                </div>
-            </div>
-            <div className='w-full py-2 px-2 space-x-4 flex bg-white text-black text-xs font-semibold justify-start items-center'>
-                <button className='flex ml-6'>{sandwichIcon()} <span className='mx-2 mt-1'>Todos</span></button>
-                {/* transformar em um map depois */}
-                <div className='w-full items-center justify-center flex overflow-x-hidden space-x-14'>
-                    <Link href={`#`}>Mercado 1</Link>
-                    <Link href={`#`}>Mercado 2</Link>
-                    <Link href={`#`}>Mercado 3</Link>
-                    <Link href={`#`}>Mercado 4</Link>
-                    <Link href={`#`}>Mercado 5</Link>
-                    <Link href={`#`}>Mercado 6</Link>
-                    <Link href={`#`}>Mercado 7</Link>
-                    <Link href={`#`}>Mercado 8</Link>
-                    <Link href={`#`}>Mercado 9</Link>
                 </div>
             </div>
         </div>
