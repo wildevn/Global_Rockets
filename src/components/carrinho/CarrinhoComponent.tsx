@@ -12,7 +12,6 @@ export interface ProductsList {
     vendidoPor: string,
 }
 
-
 export default function CarrinhoComponent() {
     let itemsData: Array<ProductsList> = [
         {   
@@ -166,7 +165,6 @@ export default function CarrinhoComponent() {
     //     }
     // }, [productsList.refresh])
 
-
     return (
         <div className="max-[900px]:w-[90%] min-[900px]:w-[900px] flex items-center box-border gap-8">
             <div className="w-[80%] flex flex-col items-center bg-white rounded-xl">
@@ -180,21 +178,20 @@ export default function CarrinhoComponent() {
                             <ProductCarrinhoItem 
                             product={item}
                             setState={(quantidade: number, key: string) => {
-                                const item_alterado = (): ProductsList => {
-                                    let aux: ProductsList = items[0]
-                                    for (let i = 0; i < itemsData.length; i++) {
-                                        if (itemsData[i].key === key) {
-                                            itemsData[i].quantidade = quantidade
-                                            aux = itemsData[i]
+                                const item_alterado = (): Array<ProductsList> => {
+                                    var aux: Array<ProductsList> = items
+                                    for (let i = 0; i < items.length; i++) {
+                                        if (items[i].key === key) {
+                                            aux[i].quantidade = quantidade
                                         }
                                     }
                                     return aux
                                 }
-                                setItems([...items, item_alterado()])
+                                setItems([...item_alterado()])
                             } } setDelete={(key: string) => {
                                 const aux: Array<ProductsList> = items
-                                for (let i = 0; i < itemsData.length; i++) {
-                                    if (itemsData[i].key === key) {
+                                for (let i = 0; i < items.length; i++) {
+                                    if (items[i].key === key) {
                                         aux.splice(i, 1)
                                     }
                                 }
@@ -233,7 +230,7 @@ export default function CarrinhoComponent() {
                     <h2 className="text-xl text-center font-semibold">Resumo do pedido</h2>
                     <div className='pt-6 flex justify-between'>
                         <span></span>
-                        <span>{`R$ ${}`}</span>
+                        {/* <span>{`R$ ${}`}</span> */}
                     </div>
                     <div className='flex justify-between pb-1'>
                         <span>frete</span>
