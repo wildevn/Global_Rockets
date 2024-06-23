@@ -8,10 +8,9 @@ interface ProductInterface{
     product: ProductsList,
     setState: Function,
     setDelete: Function,
-    productsList: Array<ProductsList>,
 }
 
-export default function ProductCarrinhoItem({product, productsList, setState, setDelete}: ProductInterface) {
+export default function ProductCarrinhoItem({product, setState, setDelete}: ProductInterface) {
    const [itemAmount, setItemAmount] = useState(product.quantidade)
 
 	function onHandleClick(plus: boolean) {
