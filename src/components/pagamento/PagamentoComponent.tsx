@@ -1,18 +1,14 @@
-
+import { parcelasConstList } from "../data/constants/pagamentoConst"
 
 export interface ProdutoInfo{
-    preco: number | number[],
+    preco: number,
 }
 
-export default function PagamentoComponent(props: ProdutoInfo) {
-    const estados = [' ', 'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES',
-        'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI',
-        'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']
-    let parcelas: React.JSX.Element[] = [] 
+export default function PagamentoComponent({preco
+    
+} : ProdutoInfo) {
+    const estados = [' ', 'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES','GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI','RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']
 
-    for(let i = 1; i <= 12; i++)
-        if(props.preco)
-        parcelas.push(<option value={i == 1 ? props.preco : props.preco * 1.1 / i}>{`${i}x de ${i == 1 ? props.preco : props.preco * 1.1 / i}`}</option>)
     return (
         <div className="max-[900px]:w-[90%] min-[900px]:w-[900px] flex items-center box-border gap-8">
             <form action="" className="w-[80%] flex flex-col items-center bg-white rounded-xl">
@@ -49,9 +45,9 @@ export default function PagamentoComponent(props: ProdutoInfo) {
                     <div >
                         <label htmlFor="estado" className="pr-2">Estado: </label>
                         <select name="estado" id="estado" className="rounded-lg border-2 p-2 border-slate-200 outline-none">
-                            {
-                                estados.map((estado) => <option value={estado} disabled={estado === ' ' ? true : false}>{estado}</option>)
-                            }
+                            {estados.map((estado, index) => (
+                                <option key={index} value={estado} disabled={estado === ' '}>{estado}</option>
+                            ))}
                         </select>
                     </div>
                 </div>
@@ -85,9 +81,12 @@ export default function PagamentoComponent(props: ProdutoInfo) {
                     <div className="pb-4">
                         <label htmlFor="parcelas" className="pr-2">Parcelas: </label>
                         <select name="parcelas" id="parcelas" className="rounded-lg border-2 p-2 border-slate-200 outline-none">
-                            {
-                                parcelas
-                            }
+                            {parcelasConstList.map((item: any) => (
+                                console.log(item.vezes === 1 ? preco : (preco * 1.1) / item.vezes),
+                                <option key={item.id} value={item.vezes}>
+                                    {`${item.vezes}x de ${item.vezes === 1 ? preco : (preco * 1.1) / item.vezes}`}
+                                </option>
+                            ))}
                         </select>
                     </div>
                 </div>
