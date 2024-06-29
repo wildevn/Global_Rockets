@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
 
-const Mercado = db.define('Venda_Produto', {
+const Mercado = db.define('Venda', {
     id_venda: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -21,11 +21,11 @@ const Mercado = db.define('Venda_Produto', {
 });
 
 //Criar a tabela no BD
-//Venda_Produto.sync();
+//Venda.sync();
 
 //Verificar se há alguma diferença na tabela, realiza a alteração
-//Venda_Produto.sync({ alter: true });
+//Venda.sync({ alter: true });
 
 //Primeiro apaga a TB, em seguida cria TB
-//Venda_Produto.sync({ force: true })
-module.exports = Venda_Produto;
+//Venda.sync({ force: true })
+module.exports = Venda;
