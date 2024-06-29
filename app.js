@@ -215,7 +215,7 @@ app.get('/pesquisa-produto', async (req, res) => {
     }
 
     // Busca todos os produtos com o nome fornecido
-    const prod = await Produto.findAll({ where: { nome: nome } });
+    const prod = await Produto.findAll({attributes: ['nome', 'marca', 'quantidade', 'preco', 'descricao'], where: {nome: nome}});
 
     if (prod === null) {
         return res.status(400).json({

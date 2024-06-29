@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('GlobalRockets', 'root', '123456', {
+const sequelize = new Sequelize('GlobalRockets', 'root', 'admin', {
     host: 'localhost',
     dialect: 'mysql'
 });
