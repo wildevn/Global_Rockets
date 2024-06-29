@@ -22,6 +22,14 @@ const carrinho = db.define('Carrinho', {
         FOREIGNKEYS : true,
         allowNull: false
     },
+    quantidade: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    valor: {
+        type: Sequelize.FLOAT,
+        allowNull: false
+}
 });
 
 //Criar a tabela no BD
