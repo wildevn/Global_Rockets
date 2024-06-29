@@ -4,15 +4,19 @@ const db = require('./db');
 const Mercado = db.define('Venda_Produto', {
     id_venda: {
         type: Sequelize.INTEGER,
-        autoIncrement: true,
         allowNull: false,
-        primaryKey: false
+        references: {
+            model: 'Venda', // nome da tabela de onde vem a chave estrangeira
+            key: 'id_venda' // campo na tabela referenciada
+        }
     },
     id_produto: {
         type: Sequelize.INTEGER,
-        autoIncrement: true,
         allowNull: false,
-        primaryKey: false
+        references: {
+            model: 'Produto', // nome da tabela de onde vem a chave estrangeira
+            key: 'id' // campo na tabela referenciada
+        }
     }
 });
 
