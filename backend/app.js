@@ -53,20 +53,18 @@ app.get('/get-produto-detalhes', async (req, res) => {
     }
 
     // Busca a linha com o ID especificado
-    await Produto.findByPk(id, {
-        attributes: ['nome', 'marca', 'quantidade', 'preco', 'descricao']
-    })
-        .then((dataproduto) => {
-            return res.json(
-                dataproduto
-            );
-        }).catch(() => {
-            return res.status(400).json({
-                erro: true,
-                mensagem: "Erro: Não foi possível carregar as informações do produto!"
-            });
-        });
+    const prod = await Produto.findAll({attributes: ['nome', 'marca', 'quantidade', 'preco', 'descricao'], where: {id: id}});
+
+    if (prod === null) {
+        return res.status(400).json({
+            erro: true,
+            mensagem: "ERRO: Produto não encontrado!"
+        })
+    } else {
+        return res.json(prod);
+    }
 });
+
 
 // Obtém todos os produtos cadastrados para a página home
 app.get('/get-produtos-home', async (req, res) => {
@@ -107,6 +105,49 @@ app.get('/get-mercados-home', async (req, res) => {
         });
 });
 
+// Atualiza um novo produto na tabela carrinho
+app.post("/add-carrinho", async (req, res) => {
+    try {
+        const { nome, quantidade, usuarioId } = req.body;
+
+        // Busca o produto pelo nome na tabela Produto
+        const produto = await Produto.findOne({
+            attributes: ['id', 'preco'],
+            where: { nome: nome }
+        });
+
+        // Verifica se o produto foi encontrado
+        if (!produto) {
+            return res.status(404).json({
+                erro: true,
+                mensagem: "Produto não encontrado!"
+            });
+        }
+
+        // Prepara os dados para salvar na tabela Carrinho
+        const carrinhoData = {
+            prodId: produto.id, // Assumindo que a tabela Carrinho tem uma coluna id_produto como chave estrangeira
+            userId: usuarioId,
+            quantidade: quantidade, // Usa a quantidade passada no corpo do POST
+            valor: produto.preco
+        };
+
+        // Salva os dados na tabela Carrinho
+        await carrinho.create(carrinhoData);
+
+        return res.json({
+            erro: false,
+            mensagem: "Dados do carrinho salvos com sucesso!"
+        });
+    } catch (error) {
+        return res.status(400).json({
+            erro: true,
+            mensagem: "ERRO: Dados para o carrinho não foram salvos!",
+            detalhe: error.message
+        });
+    }
+});
+
 // Cadastra um novo produto no banco de dados
 app.post("/add-produto", async (req, res) => {
 
@@ -137,6 +178,23 @@ app.post("/add-mercado", async (req, res) => {
             return res.status(400).json({
                 erro: true,
                 mensagem: "ERRO: Dados para o mercado não cadastrados com sucesso!"
+            });
+        })
+});
+
+// Cadastra um novo produto no banco de dados
+app.post("/add-produto", async (req, res) => {
+
+    await Produto.create(req.body)
+        .then(() => {
+            return res.json({
+                erro: false,
+                mensagem: "Dados do produto cadastrados com sucesso!"
+            });
+        }).catch(() => {
+            return res.status(400).json({
+                erro: true,
+                mensagem: "ERRO: Dados para o produto não cadastrados com sucesso!"
             });
         })
 });
