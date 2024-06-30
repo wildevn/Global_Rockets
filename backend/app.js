@@ -295,7 +295,9 @@ app.get('/carrinho', async (req, res) => {
             mensagem: "O carrinho esta vazio!"
         })
     } else {
-        const _prodList = await Produto.findAll( {attributes: ['nome', 'marca', 'quantidade', 'preco', 'descricao', 'vendidoPor'], where: {id: data.prodID}} );
+        for (let i = 0; i < _carrinho.length; i++) {
+            _prodList.push(await Produto.findOne({attributes: ['nome', 'marca', 'quantidade', 'preco', 'descricao', 'vendidoPor'], where:{id:_carrinho[i].get('prodID')} }));      
+        }
         return res.json(_prodList);
     }
 });
