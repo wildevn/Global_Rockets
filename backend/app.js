@@ -178,7 +178,7 @@ app.post("/login", async (req, res) => {
     if (usuario === null) {
         return res.status(400).json({
             erro: true,
-            mensagem: "Usuário não cadastrado"
+            mensagem: "Usuário não cadastrado ou senha invalida"
         });
     }
     else {
@@ -186,21 +186,17 @@ app.post("/login", async (req, res) => {
         if (senhaValida) {
             return res.json({
                 erro: false,
-                mensagem: "Login realizado com sucesso"
+                mensagem: "Login realizado com sucesso",
+                usuario: usuario.id
             });
         }
         else {
             return res.status(400).json({
                 erro: true,
-                mensagem: "Senha inválida"
+                mensagem: "Usuário não cadastrado ou senha invalida"
             });
         }
     }
-});
-
-app.post("/carrinho", async (req, res) => {
-
-    //TODO
 });
 
 app.get('/pesquisa-produto', async (req, res) => {
@@ -215,7 +211,7 @@ app.get('/pesquisa-produto', async (req, res) => {
     }
 
     // Busca todos os produtos com o nome fornecido
-    const prod = await Produto.findAll({attributes: ['nome', 'marca', 'quantidade', 'preco', 'descricao'], where: {nome: nome}});
+    const prod = await Produto.findAll({attributes: ['nome', 'marca', 'quantidade', 'preco', 'descricao', 'vendidoPor'], where: {nome: nome}});
 
     if (prod === null) {
         return res.status(400).json({
@@ -227,6 +223,22 @@ app.get('/pesquisa-produto', async (req, res) => {
     }
 
 
+});
+
+app.get('/carrinho', async (req, res) => {
+
+    var data = req.body;
+    const _carrinho = await carrinho.findAll({attributes: ['prodID', 'userID', 'quantidade', 'valor']});
+
+    if (_carrinho === null) {
+        return res.status(400).json({
+            erro: true,
+            mensagem: "ERRO: Carrinho vazio!"
+        })
+    } else {
+        const _prodList = await Produto.findAll( {attributes: ['nome', 'marca', 'quantidade', 'preco', 'descricao', 'vendidoPor'], where: {id: data.prodID}} );
+        return res.json(_prodList);
+    }
 });
 
 

@@ -28,6 +28,10 @@ const Produto = db.define('Produto', {
         type: Sequelize.STRING,
         allowNull: true
     },
+    vendidoPor:{
+        type: Sequelize.STRING,
+        allowNull: true
+    },
 });
 
 //Criar a tabela no BD
