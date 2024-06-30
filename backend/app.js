@@ -10,6 +10,8 @@ const Produto = require('./models/Produto.js');
 const db = require('./models/db');
 const carrinho = require('./models/carrinho');
 const { isNull } = require('util');
+const { where } = require('sequelize');
+const { QueryTypes } = require('sequelize');
 
 app.use(express.json());
 
@@ -287,6 +289,8 @@ app.get('/pesquisa-produto', async (req, res) => {
 app.get('/carrinho', async (req, res) => {
 
     var data = req.body;
+    var _prodList = [];
+
     const _carrinho = await carrinho.findAll({attributes: ['prodID', 'userID', 'quantidade', 'valor'], where:{userId: data.userID}});
 
     if (_carrinho.length == 0) {
@@ -295,7 +299,9 @@ app.get('/carrinho', async (req, res) => {
             mensagem: "O carrinho esta vazio!"
         })
     } else {
-        const _prodList = await Produto.findAll( {attributes: ['nome', 'marca', 'quantidade', 'preco', 'descricao', 'vendidoPor'], where: {id: data.prodID}} );
+        for (let i = 0; i < _carrinho.length; i++) {
+            _prodList.push(await Produto.findOne({attributes: ['nome', 'marca', 'quantidade', 'preco', 'descricao', 'vendidoPor'], where:{id:_carrinho[i].get('prodID')} }));      
+        }
         return res.json(_prodList);
     }
 });
