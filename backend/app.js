@@ -9,6 +9,7 @@ const Cadastrar = require('./models/Cadastrar.js');
 const Produto = require('./models/Produto.js');
 const db = require('./models/db');
 const carrinho = require('./models/carrinho');
+const { isNull } = require('util');
 
 app.use(express.json());
 
@@ -286,12 +287,12 @@ app.get('/pesquisa-produto', async (req, res) => {
 app.get('/carrinho', async (req, res) => {
 
     var data = req.body;
-    const _carrinho = await carrinho.findAll({attributes: ['prodID', 'userID', 'quantidade', 'valor']});
+    const _carrinho = await carrinho.findAll({attributes: ['prodID', 'userID', 'quantidade', 'valor'], where:{userId: data.userID}});
 
-    if (_carrinho === null) {
+    if (_carrinho.length == 0) {
         return res.status(400).json({
             erro: true,
-            mensagem: "ERRO: Carrinho vazio!"
+            mensagem: "O carrinho esta vazio!"
         })
     } else {
         const _prodList = await Produto.findAll( {attributes: ['nome', 'marca', 'quantidade', 'preco', 'descricao', 'vendidoPor'], where: {id: data.prodID}} );
