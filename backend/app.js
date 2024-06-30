@@ -259,6 +259,7 @@ app.post("/login", async (req, res) => {
     }
 });
 
+// Realizar a pesquisa de produtos com o mesmo nome
 app.get('/pesquisa-produto', async (req, res) => {
 
     const { nome } = req.query; // Obtém o Nome dos parâmetros da URL
@@ -285,6 +286,7 @@ app.get('/pesquisa-produto', async (req, res) => {
 
 });
 
+// Retorna todos os itens presentes no carrinho do usuário
 app.get('/carrinho', async (req, res) => {
 
     var data = req.body;
@@ -304,6 +306,7 @@ app.get('/carrinho', async (req, res) => {
     }
 });
 
+// Após ir clicar para realizar pagamento, salva as informações do carrinho na tabela de vendas
 app.get('/finalizar', async (req, res) => {
 
     var data = req.body;
@@ -339,6 +342,7 @@ app.get('/finalizar', async (req, res) => {
     }
 });
 
+// Após realizar a venda, seta na tabela venda que a venda foi concluída e zera o carrinho do usuário
 app.post("/concluir-venda", async (req, res) => {
     var aux2; 
     var aux3; 
