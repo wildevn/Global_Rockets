@@ -14,13 +14,19 @@ const carrinho = db.define('Carrinho', {
     },
     prodId: {
         type: Sequelize.INTEGER,
-        FOREIGNKEYS : true,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: 'Produto', // nome da tabela de onde vem a chave estrangeira
+            key: 'id' // campo na tabela referenciada
+        }
     },
     userId: {
         type: Sequelize.INTEGER,
-        FOREIGNKEYS : true,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: 'Cadastro', // nome da tabela de onde vem a chave estrangeira
+            key: 'id' // campo na tabela referenciada
+        }
     },
     quantidade: {
         type: Sequelize.INTEGER,
@@ -33,7 +39,7 @@ const carrinho = db.define('Carrinho', {
 });
 
 //Criar a tabela no BD
-//carrinho.sync();
+carrinho.sync();
 
 //Verificar se há alguma diferença na tabela, realiza a alteração
 //carrinho.sync({ alter: true });

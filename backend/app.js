@@ -287,7 +287,7 @@ app.get('/pesquisa-produto', async (req, res) => {
 app.get('/carrinho', async (req, res) => {
 
     var data = req.body;
-    const _carrinho = await carrinho.findAll({attributes: ['prodID', 'userID', 'quantidade', 'valor'], where:{userId: data.userID}});
+    const _carrinho = await carrinho.findAll({attributes: ['prodID', 'userID', 'quantidade', 'valor'], where:{userID: data.userID}});
 
     if (_carrinho.length == 0) {
         return res.status(400).json({
