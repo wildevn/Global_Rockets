@@ -9,6 +9,7 @@ const Cadastrar = require('./models/Cadastrar.js');
 const Produto = require('./models/Produto.js');
 const db = require('./models/db');
 const carrinho = require('./models/carrinho');
+const venda = require('./models/venda.js');
 const { isNull } = require('util');
 
 app.use(express.json());
@@ -287,6 +288,7 @@ app.get('/pesquisa-produto', async (req, res) => {
 app.get('/carrinho', async (req, res) => {
 
     var data = req.body;
+    var _prodList = [];
     const _carrinho = await carrinho.findAll({attributes: ['prodID', 'userID', 'quantidade', 'valor'], where:{userID: data.userID}});
 
     if (_carrinho.length == 0) {
@@ -302,6 +304,60 @@ app.get('/carrinho', async (req, res) => {
     }
 });
 
+app.get('/finalizar', async (req, res) => {
+
+    var data = req.body;
+    var valor_tot = 0;
+    var aux;
+    const _carrinho = await carrinho.findAll({attributes: ['prodID', 'userID', 'quantidade', 'valor'], where:{userId: data.userId}});
+
+    if (_carrinho.length == 0) {
+        return res.status(400).json({
+            erro: true,
+            mensagem: "O carrinho esta vazio!"
+        })
+    } else {
+        for (let i = 0; i < _carrinho.length; i++) {
+            valor_tot = valor_tot + _carrinho[i].get('valor');
+        }
+
+        for (let i = 0; i < _carrinho.length; i++) {   
+            aux = await venda.create({id_produto: _carrinho[i].get('prodID'), id_usuario: _carrinho[i].get('userID'), ind_vendido: 0,valor_total: valor_tot});               
+        }
+        if(aux === null){
+
+            return res.status(400).json({
+                erro: true,
+                mensagem: "ERRO : Cadastro da venda não foi concluida"
+                });
+            }
+        else 
+            return res.json({
+                erro: false,
+                mensagem: "Cadastro da venda finalizada"});
+        
+    }
+});
+
+app.post("/concluir-venda", async (req, res) => {
+    var aux2; 
+    var aux3; 
+    var data = req.body;
+   aux2 = await venda.update({ind_vendido: 0}, {where: {id_usuario: data.userId}});
+
+    if(aux2 === null){
+        return res.status(400).json({
+        erro: true,
+        mensagem: "ERRO : Cadastro da venda não foi concluida"
+        });
+    }
+    else{ 
+        aux3 = await carrinho.destroy({where: {userId: data.userId}});
+        return res.json({
+        erro: false,
+        mensagem: "Cadastro da venda finalizada"});
+        }
+});
 
 app.listen(8080, () => {
     console.log("Servidor iniciado na porta 8080: http://localhost:8080");

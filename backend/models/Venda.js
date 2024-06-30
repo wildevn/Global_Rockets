@@ -1,15 +1,37 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
 
-const Mercado = db.define('Venda', {
-    id_venda: {
+const user = require('./Cadastrar');
+const prod = require('./Produto');
+const { FOREIGNKEYS } = require('sequelize/lib/query-types');
+
+
+const venda = db.define('Venda', {
+    id: {
         type: Sequelize.INTEGER,
+        autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },
+ /*   num_venda: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },*/
+    id_produto: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+ /*       references: {
+            model: 'Produto', // nome da tabela de onde vem a chave estrangeira
+            key: 'id' // campo na tabela referenciada
+        }*/
+    },
     id_usuario:{
-        model: 'Cadastro', // nome da tabela de onde vem a chave estrangeira
-        key: 'id' // campo na tabela referenciada
+        type: Sequelize.INTEGER,
+        allowNull: false,
+/*        references:{
+            model: 'Cadastro', // nome da tabela de onde vem a chave estrangeira
+            key: 'id' // campo na tabela referenciada
+        }*/
     },
     ind_vendido: {
         type: Sequelize.INTEGER,
@@ -21,11 +43,11 @@ const Mercado = db.define('Venda', {
 });
 
 //Criar a tabela no BD
-//Venda.sync();
+//venda.sync();
 
 //Verificar se há alguma diferença na tabela, realiza a alteração
-//Venda.sync({ alter: true });
+//venda.sync({ alter: true });
 
 //Primeiro apaga a TB, em seguida cria TB
-//Venda.sync({ force: true })
-module.exports = Venda;
+//venda.sync({ force: true })
+module.exports = venda;
