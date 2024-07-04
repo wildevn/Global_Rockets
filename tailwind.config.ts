@@ -8,17 +8,29 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'loginBackground': "url('/login_background.png')"
+      },
       colors: {
         "defaultBackground": "#272628",
         "defaultRed": "#e5004f",
+        "defaultDarkerRed": "#b4004f",
       },
       height: {
-        "productDiv": "151px",
+        "productDivDefault": "151px",
+        "productDiv": "201px",
         "productLabel": "47px",
       },
       width: {
-        "defaultBanner": "1080px",
-      }
+        "defaultBannerXl": "1080px",
+        "defaultBanner": "10px",
+      },
+      margin: {
+        "4.5": "18px",
+      },
+      screens: {
+        "full-hd": "1080px",
+      },
     },
   },
   plugins: [],
